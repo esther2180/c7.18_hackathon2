@@ -3,6 +3,7 @@
  */
 $(document).ready(initializeApp);
 const runningTrails = [];
+let zipCode = null;
 /***************************************************************************************************
  * initializeApp 
  * @params {undefined} none
@@ -19,7 +20,8 @@ function initializeApp() {
  * @returns  {undefined}
  *     
  */
-function addClickHandlersToElements() {
+function addClickHandlersToElements(){
+    $('#runButton').click(getCurrentLocation);
     $('#runButton').click(ajaxYelpCall);
     $('#runButton').click(getDataFromMeetUp);
     let eventListener = $("#search_input");
@@ -30,14 +32,27 @@ function addClickHandlersToElements() {
     });
 }
 
-function checkIfInputZipIsValid(zip) {
-    var valid = true;
-    if (zip.length != 5 || isNaN(zip)) {
-        $('#error_msg').removeClass('hidden');
-        valid = false;
+function getCurrentLocation(){
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position){
+        //   console.log('Position:', position);
+          $.get( "http://maps.googleapis.com/maps/api/geocode/json?latlng="+ position.coords.latitude + "," + position.coords.longitude +"&sensor=false", function(data) {
+            currentZipCode = data.results[0].formatted_address
+            let indexOfZipCode = currentZipCode.lastIndexOf(',');
+            zipCode = currentZipCode.slice(indexOfZipCode-5, indexOfZipCode);
+          })
+        });
     }
-    return valid;
 }
+
+// function checkIfInputZipIsValid(zip) {
+//     var valid = true;
+//     if (zip.length !== 5 || !zip.length) {
+//         $('#error_msg').removeClass('hidden');
+//         valid = false;
+//     }
+//     return valid;
+// }
 /***************************************************************************************************
  * displayMapToDom - display map based on the the location (based on zip code or city user inputs)
  * @param: location //an array of objects
@@ -89,16 +104,21 @@ function displayMapOnDom() {
  */
 function ajaxYelpCall () {
     let userLocation = $("#search_input").val();
+
+    if ( !(userLocation)) {
+        userLocation = zipCode;
+    }
+
     $('#search_input').focus(function () {
         $('#error_msg').addClass('hidden');
     });
 
-    if (checkIfInputZipIsValid(userLocation)) {
-        getDataFromWeather(userLocation);
-    } else {
-        $("#search_input").val('');
-        ajaxYelpCall();
-    }
+    // if (checkIfInputZipIsValid(userLocation)) {
+    //     getDataFromWeather(userLocation);
+    // } else {
+    //     $("#search_input").val('');
+    //     ajaxYelpCall();
+    // }
     $('#error_msg').text('');
     $('.landing_page').addClass('hidden')
     $('.meerkat').removeClass('hidden')
@@ -437,3 +457,4 @@ function renderMeetUpOnDom(meetup){
         $(meetUp).append(meetupDiv)
     }
 }
+
