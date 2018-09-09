@@ -159,6 +159,11 @@ function renderWeatherOnDom(weather) {
 }
 
 function displayWeather() {
+    $(".results").css('color', 'black');
+    $(".description_tab").css('color', 'black');
+    $(".direction_tab").css('color', 'black');
+    $('.weather_tab').css('color','green');
+    $('.meetup').css('color','black');
     $('#result').addClass('hidden');
     $('.list_result').addClass('hidden');
     $('.events').addClass('hidden');
@@ -167,6 +172,11 @@ function displayWeather() {
 }
 
 function displayDescription() {
+    $(".results").css('color', 'black');
+    $(".description_tab").css('color', 'green');
+    $(".direction_tab").css('color', 'black');
+    $('.weather_tab').css('color','black');
+    $('.meetup').css('color','black');
     $('#result').addClass('hidden');
     $('.list_result').addClass('hidden');
     $('.events').addClass('hidden');
@@ -175,6 +185,7 @@ function displayDescription() {
 }
 
 function displayResult() {
+    $(".results").css('color', 'black');
     $('#result').addClass('hidden');
     $('.events').addClass('hidden');
     $('.weather_list').addClass('hidden');
@@ -186,6 +197,11 @@ function displayResult() {
 }
 
 function displayMeetUp() {
+    $(".results").css('color', 'black');
+    $(".description_tab").css('color', 'black');
+    $(".direction_tab").css('color', 'black');
+    $('.weather_tab').css('color','black');
+    $('.meetup').css('color','green');
     $('.description').addClass('hidden');
     $('.list_result').addClass('hidden');
     $('.weather_list').addClass('hidden');
@@ -194,6 +210,11 @@ function displayMeetUp() {
 }
 
 function displayDirection() {
+    $(".results").css('color', 'black');
+    $(".description_tab").css('color', 'black');
+    $(".direction_tab").css('color', 'green');
+    $('.weather_tab').css('color','black');
+    $('.meetup').css('color','black');
     $('.description').addClass('hidden');
     $('.list_result').addClass('hidden');
     $('.weather_list').addClass('hidden');
@@ -359,6 +380,7 @@ function renderInformationOnDom(runningTrailsArray) {
             descriptionDiv.append(nameOfPlace, imageOfPlace, addressOfPlace, distance, rating);
             $('.descriptionTab').append(descriptionDiv);
             displayDirectionLineOnMap(pointBCoordinates);
+            $(".description_tab").css('color', 'green');
             $("html, body").animate({
                 scrollTop: 0
             }, "slow"); //scroll window to the top
@@ -412,7 +434,7 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay, pointA, 
             // if (status == google.maps.DirectionsStatus.OK) {
             if (status == "OK") { //success function
                 directionsDisplay.setDirections(response);
-                
+
                 var result = document.getElementById('result');
                 result.innerHTML = "";
                 let newTr1 = document.createElement("tr");
@@ -433,7 +455,7 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay, pointA, 
                     newTr3.appendChild(td2);
                     newTr3.appendChild(td3);
                     result.appendChild(newTr3);
-                } 
+                }
                 let newTr4 = document.createElement("tr");
                 newTr4.innerHTML = `<b>End location:</b> ${response.routes[0].legs[0].end_address}`;
                 result.appendChild(newTr4);
