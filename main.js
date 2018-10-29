@@ -354,22 +354,8 @@ function displayMeetUpSuccess(response) {
     let meetUpResponse = response.results;
     let filteredMeetUpResults = [];
     for (let m = 0; m < meetUpResponse.length; m++) {
-        let {
-            description,
-            name,
-            event_url,
-            time,
-            group,
-            yes_rsvp_count
-        } = meetUpResponse[m];
-        let formattedInfo = {
-            description,
-            eventName: name,
-            link: event_url,
-            time,
-            group,
-            yes_rsvp_count
-        }
+        let { description, name, event_url, time, group, yes_rsvp_count } = meetUpResponse[m];
+        let formattedInfo = {description,eventName: name,link: event_url,time,group,yes_rsvp_count}
         formattedInfo.time = Date(parseInt(formattedInfo.time))
         filteredMeetUpResults.push(formattedInfo);
     }
@@ -382,19 +368,23 @@ function displayError( sub ) {
 
 function renderMeetUpOnDom(meetup) {
     for (let m = 0; m < meetup.length; m++) {
+
         let groupName = $('<p>', {
             class: 'groupName',
             text: meetup[m].group.name.toUpperCase()
         })
+
         let members = $('<div>', {
             class: 'rsvp',
             text: `${meetup[m].yes_rsvp_count} ${meetup[m].group.who} going`
         })
+
         let eventName = $('<a>', {
             class: 'rsvp',
             text: meetup[m].eventName,
             href: meetup[m].link
         })
+        
         let meetUp = $('.location_list');
         let meetupDiv = $('<div>').addClass(`meetUp+${m} events hidden`);
         meetupDiv = $(meetupDiv).append(groupName, eventName, members)
