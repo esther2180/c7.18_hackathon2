@@ -183,7 +183,6 @@ function displayWeatherSuccess(responseFromServer) {
         wind: responseFromServer.wind['speed'],
         clouds: responseFromServer.clouds['all'],
     };
-    console.log(responseFromServer);
     renderWeatherOnDom(weather);
 }
 
