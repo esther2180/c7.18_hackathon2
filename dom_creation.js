@@ -213,7 +213,7 @@ function renderWeatherOnDom(weather) {
     
     let weatherList = $('<ul>').addClass('weather_list hidden');
     weatherList.append(headline, line0, line1, line2, line3, line4, line5, line6, line7);
-    $('.location_list').append(weatherList);
+    $('.single_location_detail').append(weatherList);
 }
 
 function displayMeetUpSuccess(response) {
@@ -225,7 +225,7 @@ function displayMeetUpSuccess(response) {
             class: `events hidden`,
             html: '<h2>Currently, there are no upcoming meetups near your area.'
         });
-        $('.location_list').append(meetupDiv);
+        $('.single_location_detail').append(meetupDiv);
     }
     const meetUpResponse = response.results;
     const filteredMeetUpResults = [];
@@ -255,17 +255,9 @@ function renderMeetUpOnDom(meetup) {
             title: 'Meetup.com Link',
             target: '_blank'
         })
-        const meetUp = $('.location_list');
+        const meetUp = $('.single_location_detail');
         let meetupDiv = $('<div>').addClass(`meetUp events hidden`);
         meetupDiv = $(meetupDiv).append(groupName, eventName, members)
         $(meetUp).append(meetupDiv)
     }
 }
-
-// function displaySearchResultMessage() {
-//     if (inputFromUser === "") {
-//         $(".search_result_message").text('Search result for your current location:');
-//     } else {
-//         $(".search_result_message").text(`Search result for ${inputFromUser}`);
-//     }
-// }
