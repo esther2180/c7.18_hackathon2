@@ -10,9 +10,9 @@ body {
    width: 100vw;
    background: url(./images/runningtrail.jpg);
    background-repeat: repeat-y; 
-   background-position: center;
+   background-position: 0 40%;
    background-size: cover;
-   background-attachment: fixed
+   /* background-attachment: fixed */
 }
 
 .container {
@@ -153,15 +153,14 @@ body {
     color: black;
 }
 
+map_and_search_result_message {
+    height: 90vh;
+}
+
 .map_page{
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-}
-
-.search_result_message {
-    margin-left: 2.5vw;
-    font-size: 1.25rem;
 }
 
 #map_area{
@@ -178,6 +177,7 @@ body {
 .map_and_trail_list{
     display: flex;
     justify-content: space-between;
+    min-height: 70vh;
 }
 
 .group_tabs{
@@ -203,9 +203,11 @@ body {
     color: black;
 }
 
-/* .single_location_detail + .meetUp {
-    box-shadow: 5px 10px 18px black; 
-}  */
+.single_location_detail{
+    margin-right: 0.1vw;
+    position: relative;
+    top: 6vh;
+}
 
 a{
     font-size: 1rem;
@@ -338,7 +340,7 @@ a{
 
 .tabLinks {
     display: inline-block;
-    width: 19.5%;
+    width: 20.2%;
     color: white;
     background-color: #1976d2;
     text-decoration: none;
@@ -496,6 +498,25 @@ Media Query
 
 /* --- Laptops and Desktops --- */
 @media (min-width: 1025px) and (max-width: 1280px) {
+    body {
+        background-position: 20% 40%;
+    }
+
+    .logo {
+        top: 32vh;
+        left: 56vw;
+        width: 35%;
+    }
+
+    #search_input {
+        font-size: 1.3rem;
+    }
+
+    #runButton {
+        font-size: 1.1rem;
+        padding: 2%;
+    }
+
     .search_and_logo{
         display: flex;
         justify-content: space-around;
