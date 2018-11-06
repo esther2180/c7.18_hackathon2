@@ -45,7 +45,6 @@ function displayMapOnDom() {
 }
 
 function renderTrailInfoOnDom(markerIsClicked = false) {
-    debugger;
     if ($('.list_result').length > 0) {
         $(".list_result").remove();
     }
@@ -185,68 +184,92 @@ function displayWeatherSuccess(responseFromServer) {
         humidity: responseFromServer.main['humidity'],
         wind: responseFromServer.wind['speed'],
         clouds: responseFromServer.clouds['all'],
+        sunrise: responseFromServer.sys['sunrise'],
+        sunset: responseFromServer.sys['sunset']
     };
     renderWeatherOnDom(weather);
 }
 
 function renderWeatherOnDom(weather) {
+    console.log('weather:', weather);
+
     if ($('.weather_list').length > 0) {
         $('.weather_list').remove();
     }
+    
     let imgSrc = `http://openweathermap.org/img/w/${weather.iconId}.png`;
     let weatherImage = $('<img class="weather_icon">').attr({
         "src": imgSrc,
         "alt": weather.condition
     });
+
     let today = new Date();
     let dateToday = today.toDateString();
     let timeNow = today.toLocaleTimeString();
+
+    //converting sunrise Unix timestamp to time
+    let sunriseInMiliseconds = new Date(weather.sunrise * 1000);
+    let hrs = `0${sunriseInMiliseconds.getHours()}`;
+    let mins = `0${sunriseInMiliseconds.getMinutes()}`;
+    let secs = `0${sunriseInMiliseconds.getSeconds()}`;
+    let formattedSunriseTime = `${hrs.substr(-2)}:${mins.substr(-2)}:${secs.substr(-2)}`;
+
+    //converting sunset Unix timestamp to time
+    let sunsetInMiliseconds = new Date(weather.sunset * 1000);
+    hrs = `0${sunsetInMiliseconds.getHours()-12}`;
+    mins = `0${sunsetInMiliseconds.getMinutes()}`;
+    secs = `0${sunsetInMiliseconds.getSeconds()}`;
+    let formattedSunsetTime = `${hrs.substr(-2)}:${mins.substr(-2)}:${secs.substr(-2)}`;
+
     let currentInC = ((weather.currentTempInF -32) * 5/9).toFixed(1);
     let highInC = ((weather.tempMaxInF - 32) * 5/9).toFixed(1);
     let lowInC = ((weather.tempMinInF - 32) * 5/9).toFixed(1);
     let headline = $('<div>').append(`${weather.cityName}`);
-    let line0 = $('<li>').append(`<i>As of ${dateToday} ${timeNow}</i>`);
-    let line1 = $('<li>').append(weatherImage, (weather.conditionDescription).toUpperCase());
-    let line2 = $('<li>').append(`<b>Current Temperature :</b> ${weather.currentTempInF} <b>°F</b>&nbsp; (${currentInC} <b>°C</b>) `);
-    let line3 = $('<li>').append(`<b>High :</b> ${weather.tempMaxInF} <b>°F</b>&nbsp; (${highInC} <b>°C</b>)`);
-    let line4 = $('<li>').append(`<b>Low :</b> ${weather.tempMinInF} <b>°F</b>&nbsp; (${lowInC} <b>°C</b>)`);
-    let line5 = $('<li>').append(`<b>Humidity :</b> ${weather.humidity} <b>%</b>`);
-    let line6 = $('<li>').append(`<b>Wind :</b> ${weather.wind} <b>m/s</b>`);
-    let line7 = $('<li>').append(`<b>Cloudiness :</b> ${weather.clouds} <b>%</b>`);
+    let timeStamp = $('<li>').append(`<i>As of ${dateToday} ${timeNow}</i>`);
+    let condition = $('<li>').append(weatherImage, (weather.conditionDescription).toUpperCase());
+    let currentTemp = $('<li>').append(`<b>Current Temperature :</b> ${weather.currentTempInF} <b>°F</b>&nbsp; (${currentInC} <b>°C</b>) `);
+    let highTemp = $('<li>').append(`<b>High :</b> ${weather.tempMaxInF} <b>°F</b>&nbsp; (${highInC} <b>°C</b>)`);
+    let lowTemp = $('<li>').append(`<b>Low :</b> ${weather.tempMinInF} <b>°F</b>&nbsp; (${lowInC} <b>°C</b>)`);
+    let humidity = $('<li>').append(`<b>Humidity :</b> ${weather.humidity} <b>%</b>`);
+    let wind = $('<li>').append(`<b>Wind :</b> ${weather.wind} <b>m/s</b>`);
+    let cloudiness = $('<li>').append(`<b>Cloudiness :</b> ${weather.clouds} <b>%</b>`);
     
+    let sunrise = $('<li>').append(`<b>Sunrise :</b> ${formattedSunriseTime} <b>am</b>`);
+    let sunset = $('<li>').append(`<b>Sunset :</b> ${formattedSunsetTime} <b>pm</b>`);
+
     let weatherList = $('<ul>').addClass('weather_list hidden');
-    weatherList.append(headline, line0, line1, line2, line3, line4, line5, line6, line7);
+    weatherList.append(headline, timeStamp, condition, currentTemp, highTemp, lowTemp, humidity, wind, cloudiness, sunrise, sunset);
     $('.single_location_detail').append(weatherList);
 }
 
 function displayForecastSuccess(responseFromServer) {
-    console.log('forecast:', responseFromServer.list);
+    console.log('forecast list:', responseFromServer.list);
     let forecast = {
-        day1: responseFromServer.list[11].dt_txt,
-        day1Cond: responseFromServer.list[0].weather[0].description,
-        day1High: (responseFromServer.list[0].main.temp_max * 9 / 5 - 459.67).toFixed(1),
-        day1Low: (responseFromServer.list[0].main.temp_min * 9 / 5 - 459.67).toFixed(1),
+        day1: responseFromServer.list[5].dt_txt,
+        day1Cond: responseFromServer.list[5].weather[0].description,
+        day1High: (responseFromServer.list[5].main.temp_max * 9 / 5 - 459.67).toFixed(1),
+        day1Low: (responseFromServer.list[5].main.temp_min * 9 / 5 - 459.67).toFixed(1),
         // day1Icon: responseFromServer.list[0].weather[0].icon,
 
-        day2: responseFromServer.list[18].dt_txt,
-        day2Cond: responseFromServer.list[8].weather[0].description,
-        day2High: (responseFromServer.list[8].main.temp_max * 9 / 5 - 459.67).toFixed(1),
-        day2Low: (responseFromServer.list[8].main.temp_min * 9 / 5 - 459.67).toFixed(1),
+        day2: responseFromServer.list[12].dt_txt,
+        day2Cond: responseFromServer.list[12].weather[0].description,
+        day2High: (responseFromServer.list[12].main.temp_max * 9 / 5 - 459.67).toFixed(1),
+        day2Low: (responseFromServer.list[12].main.temp_min * 9 / 5 - 459.67).toFixed(1),
 
-        day3: responseFromServer.list[25].dt_txt,
-        day3Cond: responseFromServer.list[16].weather[0].description,
-        day3High: (responseFromServer.list[16].main.temp_max * 9 / 5 - 459.67).toFixed(1),
-        day3Low: (responseFromServer.list[16].main.temp_min * 9 / 5 - 459.67).toFixed(1),
+        day3: responseFromServer.list[19].dt_txt,
+        day3Cond: responseFromServer.list[19].weather[0].description,
+        day3High: (responseFromServer.list[19].main.temp_max * 9 / 5 - 459.67).toFixed(1),
+        day3Low: (responseFromServer.list[19].main.temp_min * 9 / 5 - 459.67).toFixed(1),
 
-        day4: responseFromServer.list[32].dt_txt,
-        day4Cond: responseFromServer.list[24].weather[0].description,
-        day4High: (responseFromServer.list[24].main.temp_max * 9 / 5 - 459.67).toFixed(1),
-        day4Low: (responseFromServer.list[24].main.temp_min * 9 / 5 - 459.67).toFixed(1),
+        day4: responseFromServer.list[26].dt_txt,
+        day4Cond: responseFromServer.list[26].weather[0].description,
+        day4High: (responseFromServer.list[26].main.temp_max * 9 / 5 - 459.67).toFixed(1),
+        day4Low: (responseFromServer.list[26].main.temp_min * 9 / 5 - 459.67).toFixed(1),
 
-        day5: responseFromServer.list[39].dt_txt,
-        day5Cond: responseFromServer.list[32].weather[0].description,
-        day5High: (responseFromServer.list[32].main.temp_max * 9 / 5 - 459.67).toFixed(1),
-        day5Low: (responseFromServer.list[32].main.temp_min * 9 / 5 - 459.67).toFixed(1),
+        day5: responseFromServer.list[33].dt_txt,
+        day5Cond: responseFromServer.list[33].weather[0].description,
+        day5High: (responseFromServer.list[33].main.temp_max * 9 / 5 - 459.67).toFixed(1),
+        day5Low: (responseFromServer.list[33].main.temp_min * 9 / 5 - 459.67).toFixed(1),
 
     };
     renderForecastOnDom(forecast);
@@ -255,6 +278,11 @@ function displayForecastSuccess(responseFromServer) {
 function renderForecastOnDom(forecast) {
     //will clean up later~~~~~~~~~~~~~~~~~~~ just testing here for now
     let monthList = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    let imgSrc = `http://openweathermap.org/img/w/${forecast.list[0].weather[0].icon}.png`;
+    let weatherImage = $('<img class="weather_icon">').attr({
+        "src": imgSrc,
+        "alt": weather.condition
+    });
 
     let monStr1 = monthList[((forecast.day1).slice(5,7))-1];
     let dayStr1 = ((forecast.day1).slice(8,10));
@@ -271,24 +299,14 @@ function renderForecastOnDom(forecast) {
     let monStr5 = monthList[((forecast.day5).slice(5,7))-1];
     let dayStr5 = ((forecast.day5).slice(8,10));
 
-    let headline = `<b>5 Day Forecast :</b> (will fix the layout later)`;
-    let forecastTable1 = $('<tr>').append(`<td>${monStr1} ${dayStr1} : ${forecast.day1Cond} 
-        with High ${forecast.day1High} <b>°F</b> | Low ${forecast.day1Low} <b>°F</b></td>`);
+    let headline = `<caption><b>5 Day Forecast :</b> (will fix the layout later)</caption>`;
+    let header = $('<tr>').append(`<th>${monStr1} ${dayStr1}<th>${monStr2} ${dayStr2}<th>${monStr3} ${dayStr3}<th>${monStr4} ${dayStr4}<th>${monStr5} ${dayStr5}`);
+    let condition = $('<tr>').append(`<td>${forecast.day1Cond}<td>${forecast.day2Cond}<td>${forecast.day3Cond}<td>${forecast.day4Cond}<td>${forecast.day5Cond}`);
+    let highs = $('<tr>').append(`<td>${weatherImage}<b>°</b> ${forecast.day1Low}<b>°</b></b><td>${forecast.day2High}<b>°F</b><td>${forecast.day3High}<b>°F</b><td>${forecast.day4High}<b>°F</b><td>${forecast.day5High}<b>°F</b>`);
+    let lows = $('<tr>').append(`<td>Low<td>${forecast.day1Low}<b>°F</b><td>${forecast.day2Low}<b>°F</b><td>${forecast.day3Low}<b>°F</b><td>${forecast.day4Low}<b>°F</b><td>${forecast.day5Low}<b>°F</b>`);
 
-    let forecastTable2 = $('<tr>').append(`<td>${monStr2} ${dayStr2} : ${forecast.day2Cond}
-        with High ${forecast.day2High} <b>°F</b> | Low ${forecast.day2Low} <b>°F</b></td>`);
-
-    let forecastTable3 = $('<tr>').append(`<td>${monStr3} ${dayStr3} : ${forecast.day3Cond}        
-        with High ${forecast.day3High} <b>°F</b> | Low ${forecast.day3Low} <b>°F</b></td>`);
-
-    let forecastTable4 = $('<tr>').append(`<td>${monStr4} ${dayStr4} : ${forecast.day4Cond}
-        with High ${forecast.day4High} <b>°F</b> | Low ${forecast.day4Low} <b>°F</b></td>`);
-
-    let forecastTable5 = $('<tr>').append(`<td>${monStr5} ${dayStr5} : ${forecast.day5Cond}
-        with High ${forecast.day5High} <b>°F</b> | Low ${forecast.day5Low} <b>°F</b></td>`);
-
-    let forecastList = $('<table>').addClass('weather_list hidden');
-    forecastList.append(headline, forecastTable1, forecastTable2, forecastTable3, forecastTable4, forecastTable5);
+    let forecastList = $('<table>').addClass('weatherTable weather_list hidden');
+    forecastList.append(headline,  header, condition, highs, lows);
     $('.location_list').append(forecastList);
 }
 

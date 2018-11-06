@@ -396,10 +396,10 @@ a{
 }
 
 @keyframes loadingPeople {
-    0% {left: 37%; top: 50%;}
-    30% {left: 42%; top: 48%;}
-    75% {left: 47%; top: 50%;}
-    100% {left: 55%; top: 48%;}
+    0% { left: 37%; }
+    30% { left: 42%; }
+    75% { left: 47%; }
+    100% { left: 55%; }
 }
 
 .loadingImg{
@@ -410,7 +410,7 @@ a{
     transform: translate(-50%,-50%);
     z-index: 99;
     animation-name: loadingPeople;
-    animation-duration: 1s;
+    animation-duration: 3s;
     animation-iteration-count: infinite;
 }
 
@@ -482,6 +482,29 @@ a{
     font-size: 1.5rem;
 }
 
+.weatherTable {
+    width: 95%;
+    overflow-x: hidden;
+}
+
+.weatherTable, .weatherTable th, .weatherTable td {
+    border: 1px solid black;
+    text-align: center;
+    border-collapse:collapse;
+}
+
+.weatherTable th {
+    background-color: silver;
+}
+
+.weatherTable td {
+    vertical-align: middle;
+    height: 55px;
+    padding: 10px;
+
+
+}
+
 
 /*************************
 Media Query
@@ -529,9 +552,6 @@ Media Query
     }
 
     .search_and_logo{
-        display: flex;
-        justify-content: space-around;
-        background-color: #6299d1f6;
         height: 63px;
     }
 
@@ -552,9 +572,6 @@ Media Query
     
     
     .search_and_logo{
-        display: flex;
-        justify-content: space-around;
-        background-color: #6299d1f6;
         height: 63px;
     }
 
