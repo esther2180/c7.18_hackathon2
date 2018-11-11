@@ -79,7 +79,7 @@ body {
     justify-content: space-around;
     align-items: center;
     background-color: #1976d2;
-    height: 7vh;
+    height: 10vh;
     width: 100vw;
 }
 
@@ -611,7 +611,7 @@ Media Queries
     }
     
     #search_field{
-        width: 55vw;
+        width: 63vw;
         font-size: 0.85rem;
     }
     
