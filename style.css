@@ -188,7 +188,7 @@ body {
     width: 34vw;
     height: 87vh;
     margin-right: 2px;
-    overflow-y: hidden;
+    overflow-y: auto;
     overflow-x: hidden;
     background-color: whitesmoke;
 }
@@ -199,7 +199,7 @@ body {
     right: 0;
     height: 93vh;
     margin-right: 2px;
-    overflow-y: hidden;
+    overflow-y: auto;
     overflow-x: hidden;
 }
 
@@ -502,7 +502,7 @@ a{
     font-size: 1.5rem;
 }
 
-.container_tabs::-webkit-scrollbar {
+/* .container_tabs::-webkit-scrollbar {
     width: 10px;
     background: lightgray;
 } 
@@ -528,7 +528,7 @@ a{
 
 .results_list:hover, .results_list:active, .results_list:focus {
     overflow-y: auto;
-}
+} */
 
 .zIndex {
     z-index: 5;
