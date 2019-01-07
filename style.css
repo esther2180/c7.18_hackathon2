@@ -40,6 +40,7 @@ body {
  
  #runButton {
      display: none;
+     cursor: pointer;
  }
  #search_input {
      width: 550px;
@@ -93,6 +94,7 @@ body {
      text-shadow: 1.5px 1.5px rgb(87, 100, 104);
      white-space: nowrap;
      height: 42px;
+     cursor: pointer;
  }
  .top_navigation{
      display: flex;
@@ -124,7 +126,7 @@ body {
      font-family: 'Poppins', sans-serif;
      text-align: center;
      border: 0;
-     font-size: 1rem;
+     font-size: 1.1rem;
      color: black;
      outline: none;
  }
@@ -145,6 +147,7 @@ body {
  
  #glass_button{
      display: none;
+     cursor: pointer;
  }
  ::placeholder { 
      color: gray; /* Firefox */
@@ -153,6 +156,7 @@ body {
  
   .input-group-btn {
      display: inline-block;
+     cursor: pointer;
   }
  
  .logo {
@@ -347,9 +351,10 @@ body {
      border-bottom: 1px black solid;
  }
  
+ /* COMMETING SINCE PROP/VALUE WAS ALREADY COMMENTED (REMOVE IF NOT NEEDED)
  .description>div, .description img, .trailName {
      padding: 3px 2%;
- }
+ } */
  
  /* Nav Bar */
  .nav_tabs {
@@ -367,7 +372,7 @@ body {
      text-decoration: none;
      white-space: nowrap;
      cursor: pointer;
-     font-size: 0.65rem;
+     font-size: 0.9rem;
      line-height: 40px;
      vertical-align: top;
      box-sizing: border-box;
@@ -400,7 +405,7 @@ body {
  
  .locationDescription {
      padding: 0 3%;
-     font-size: 18px;
+     font-size: 16px;
      height: 180px;
      position: relative;
      display: flex;
@@ -494,6 +499,7 @@ body {
      border-radius: 5px;
      margin-top: 7%;
      position: relative;
+     font-size: 15px;
  }
  
  .btn-blue:hover {
@@ -604,6 +610,7 @@ body {
      }
      .btn-blue{
          margin-top: 5%;
+         cursor: pointer;
      }
      .map_page_logo{
          height: 25px;
@@ -629,6 +636,7 @@ body {
          width: 13%;
          height: 100%;
          right: 0;
+         cursor: pointer;
      }
      #search_field {
          text-align: left;
@@ -650,6 +658,7 @@ body {
      }
      #runButton {
          display: none;
+         cursor: pointer;
      }
      #search_input{
          font-size: 0.85rem;
@@ -804,7 +813,7 @@ body {
      
      .tabLinks {
          /* line-height: 35px; */
-         font-size: 0.65rem;
+         font-size: 0.75rem;
      }
      
      .tabLinks:hover {
@@ -857,6 +866,7 @@ body {
      }
      .btn-blue{
          margin-top: 4%;
+         cursor: pointer;
      }
      .logo{
          width: 400px;
@@ -869,6 +879,7 @@ body {
      }
      #runButton {
          display: none;
+         cursor: pointer;
      }
      .search_container{
          font-size: 1.2rem;
@@ -921,6 +932,7 @@ body {
  
       .input-group-btn {
          display: inline-block;
+         cursor: pointer;
       }
  
      .map_and_search_result_message {
@@ -1094,6 +1106,7 @@ body {
  @media all and (min-width: 768px) and (max-width: 1200px) {
      .btn-blue{
          margin-top: 9%;
+         cursor: pointer;
      }
      .col-2 {
          margin: 0 10%;
@@ -1115,6 +1128,7 @@ body {
      }
      #search_field {
          width: 80%;
+         font-size: 1rem;
      }
      #search_input {
          width: 500px;
@@ -1138,7 +1152,7 @@ body {
      }
  
      .tabLinks {
-         font-size:0.5rem;
+         font-size:0.8rem;
      }
      .nav_tabs,.container_tabs{
          width: 48vw;
@@ -1156,12 +1170,53 @@ body {
          font-size: 17px;
      }
  }
+
+ /* iPad */
+ @media all and (width: 768px) and (height: 1024px) {
+     #map_area{
+         width: 100%;
+     }
+     .container_tabs{
+         width: 100%;
+     }
+     .nav_tabs{
+         width: 100%;
+     }
+     #info_msg{
+         width: 600px;
+     }
+     .search_container{
+         width: 600px;
+     }
+ }
+
+ /* iPad Pro */
+ @media all and (width: 1024px) and (height: 1366px) {
+     body{
+         background-position: -234px 40%;
+     }
+     .results_list{
+         height: 95vh;
+     }
+     #map_area{
+         height: 92vh;
+     }
+     .container_tabs{
+         height: 90vh;
+     }
+     .logo{
+         width: 600px;
+     }
+     .search_container{
+         width: 600px;
+     }
+ }
  
  
  /* --- Laptops and Desktops --- */
  @media (min-width: 1025px) and (max-width: 1280px) {
      .tabLinks{
-         font-size: 0.55rem;
+         font-size: 0.9rem;
      }
  }
  
